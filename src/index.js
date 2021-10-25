@@ -1,17 +1,141 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useState, useRef } from "react"
+import ReactDOM from "react-dom"
+import "./index.css"
+const calculate = (a, b, op) => {
+  switch (op) {
+    case "+":
+      return a + b
+    case "-":
+      return a - b
+    case "/":
+      return a / b
+    case "*":
+      return a * b
+  }
+}
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function Number({ value, onClick }) {
+  return (
+    <button
+      className="number"
+      value={value}
+      onClick={(e) => onClick(e.target.value)}
+    >
+      {value}
+    </button>
+  )
+}
+function Plus({ onClick }) {
+  return <button onClick={() => onClick("+")}>+</button>
+}
+function Minus({ onClick }) {
+  return <button onClick={() => onClick("-")}>-</button>
+}
+function Multiplier({ onClick }) {
+  return <button onClick={() => onClick("*")}>*</button>
+}
+function Divider({ onClick }) {
+  return <button onClick={() => onClick("/")}>/</button>
+}
+function CalculatorBoard({
+  currentValue,
+  setCurrentValue,
+  nextValue,
+  setNextValue,
+  operator,
+  setOperator,
+}) {
+  const onOperatorClick = (op) => {
+    if (operator != null) {
+      setCurrentValue(calculate(currentValue, nextValue, operator))
+      setNextValue(0)
+      setOperator(op)
+    } else {
+      setOperator(op)
+    }
+  }
+  const onNumberClick = (target) => {
+    if (operator == null) {
+      return setCurrentValue(parseInt(currentValue + target))
+    }
+    return setNextValue(parseInt(nextValue + target))
+  }
+  return (
+    <div id="board">
+      <div id="numbers">
+        <div className="board-row">
+          <Number value="7" onClick={onNumberClick} />
+          <Number value="8" onClick={onNumberClick} />
+          <Number value="9" onClick={onNumberClick} />
+        </div>
+        <div className="board-row">
+          <Number value="4" onClick={onNumberClick} />
+          <Number value="5" onClick={onNumberClick} />
+          <Number value="6" onClick={onNumberClick} />
+        </div>
+        <div className="board-row">
+          <Number value="1" onClick={onNumberClick} />
+          <Number value="2" onClick={onNumberClick} />
+          <Number value="3" onClick={onNumberClick} />
+        </div>
+        <div className="board-row">
+          <Number value="0" onClick={onNumberClick} />
+        </div>
+      </div>
+      <div className="operations">
+        <Plus onClick={onOperatorClick} />
+        <Minus onClick={onOperatorClick} />
+        <Multiplier onClick={onOperatorClick} />
+        <Divider onClick={onOperatorClick} />
+      </div>
+    </div>
+  )
+}
+function TextInput({ value, result, onInputSubmit }) {
+  const inputRef = useRef()
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        inputRef.current.value = result
+        onInputSubmit()
+      }}
+    >
+      <input type="text" ref={inputRef}></input>
+      <input type="submit" value="=" />
+    </form>
+  )
+}
+function Calculator() {
+  const [currentValue, setCurrentValue] = useState(0)
+  const [nextValue, setNextValue] = useState(0)
+  const [operator, setOperator] = useState(null) // se è null devo mettere i numeri nel currentvalue, else nel nextvalue
+  console.log(operator)
+  console.log(currentValue)
+  console.log(nextValue)
+  const result = calculate(currentValue, nextValue, operator)
+  console.log(result)
+  return (
+    <div>
+      <TextInput
+        value={operator == null ? currentValue : nextValue}
+        result={result}
+        onInputSubmit={() => {
+          setCurrentValue(0)
+          setNextValue(0)
+          setOperator(null)
+        }}
+      />
+      <CalculatorBoard
+        currentValue={currentValue}
+        setCurrentValue={setCurrentValue}
+        nextValue={nextValue}
+        setNextValue={setNextValue}
+        operator={operator}
+        setOperator={setOperator}
+      />
+    </div>
+  )
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(<Calculator />, document.getElementById("root"))
