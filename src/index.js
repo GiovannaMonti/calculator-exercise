@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState } from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
 const calculate = (a, b, op) => {
@@ -11,7 +11,58 @@ const calculate = (a, b, op) => {
       return a / b
     case "*":
       return a * b
+    default:
+    // do nothing
   }
+}
+
+function Plus({ onClick }) {
+  return <button onClick={() => onClick("+")}>+</button>
+}
+
+function Minus({ onClick }) {
+  return <button onClick={() => onClick("-")}>-</button>
+}
+
+function Multiplier({ onClick }) {
+  return <button onClick={() => onClick("*")}>*</button>
+}
+
+function Divider({ onClick }) {
+  return <button onClick={() => onClick("/")}>/</button>
+}
+
+function TextInput({
+  currentValue,
+  nextValue,
+  operator,
+  result,
+  onInputSubmit,
+  onChange,
+}) {
+  const input = document.getElementById("textinput")
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        input.value = result
+        onInputSubmit()
+      }}
+    >
+      <input
+        id="textinput"
+        type="text"
+        value={operator == null ? currentValue : nextValue}
+        onChange={(e) => {
+          const value = parseInt(e.target.value)
+          return onChange(
+            operator == null ? (currentValue = value) : (nextValue = value)
+          )
+        }}
+      ></input>
+      <input type="submit" value="=" />
+    </form>
+  )
 }
 
 function Number({ value, onClick }) {
@@ -25,18 +76,7 @@ function Number({ value, onClick }) {
     </button>
   )
 }
-function Plus({ onClick }) {
-  return <button onClick={() => onClick("+")}>+</button>
-}
-function Minus({ onClick }) {
-  return <button onClick={() => onClick("-")}>-</button>
-}
-function Multiplier({ onClick }) {
-  return <button onClick={() => onClick("*")}>*</button>
-}
-function Divider({ onClick }) {
-  return <button onClick={() => onClick("/")}>/</button>
-}
+
 function CalculatorBoard({
   currentValue,
   setCurrentValue,
@@ -91,21 +131,7 @@ function CalculatorBoard({
     </div>
   )
 }
-function TextInput({ value, result, onInputSubmit }) {
-  const inputRef = useRef()
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        inputRef.current.value = result
-        onInputSubmit()
-      }}
-    >
-      <input type="text" ref={inputRef}></input>
-      <input type="submit" value="=" />
-    </form>
-  )
-}
+
 function Calculator() {
   const [currentValue, setCurrentValue] = useState(0)
   const [nextValue, setNextValue] = useState(0)
@@ -118,12 +144,24 @@ function Calculator() {
   return (
     <div>
       <TextInput
-        value={operator == null ? currentValue : nextValue}
+        currentValue={currentValue}
+        setCurrentValue={setCurrentValue}
+        nextValue={nextValue}
+        setNextValue={setNextValue}
+        operator={operator}
+        setOperator={setOperator}
         result={result}
         onInputSubmit={() => {
           setCurrentValue(0)
           setNextValue(0)
           setOperator(null)
+        }}
+        onChange={(value) => {
+          if (operator == null) {
+            setCurrentValue(value)
+          } else {
+            setNextValue(value)
+          }
         }}
       />
       <CalculatorBoard
