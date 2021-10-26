@@ -40,12 +40,10 @@ function TextInput({
   onInputSubmit,
   onChange,
 }) {
-  const input = document.getElementById("textinput")
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault()
-        input.value = result
         onInputSubmit()
       }}
     >
@@ -84,6 +82,8 @@ function CalculatorBoard({
   setNextValue,
   operator,
   setOperator,
+  isResult,
+  setIsResult,
 }) {
   const onOperatorClick = (op) => {
     if (operator != null) {
@@ -95,10 +95,20 @@ function CalculatorBoard({
     }
   }
   const onNumberClick = (target) => {
-    if (operator == null) {
-      return setCurrentValue(parseInt(currentValue + target))
+    if (isResult) {
+      if (operator == null) {
+        setCurrentValue(parseInt(target))
+      } else {
+        setNextValue(parseInt(target))
+      }
+      return
     }
-    return setNextValue(parseInt(nextValue + target))
+    setIsResult(false)
+    if (operator == null) {
+      setCurrentValue(parseInt(currentValue + target))
+    } else {
+      setNextValue(parseInt(nextValue + target))
+    }
   }
   return (
     <div id="board">
@@ -135,12 +145,10 @@ function CalculatorBoard({
 function Calculator() {
   const [currentValue, setCurrentValue] = useState(0)
   const [nextValue, setNextValue] = useState(0)
-  const [operator, setOperator] = useState(null) // se è null devo mettere i numeri nel currentvalue, else nel nextvalue
-  console.log(operator)
-  console.log(currentValue)
-  console.log(nextValue)
+  const [operator, setOperator] = useState(null)
+  const [isResult, setIsResult] = useState(false)
   const result = calculate(currentValue, nextValue, operator)
-  console.log(result)
+  console.log({ operator, currentValue, nextValue, result })
   return (
     <div>
       <TextInput
@@ -152,9 +160,10 @@ function Calculator() {
         setOperator={setOperator}
         result={result}
         onInputSubmit={() => {
-          setCurrentValue(0)
+          setCurrentValue(result)
           setNextValue(0)
           setOperator(null)
+          setIsResult(true)
         }}
         onChange={(value) => {
           if (operator == null) {
@@ -171,9 +180,13 @@ function Calculator() {
         setNextValue={setNextValue}
         operator={operator}
         setOperator={setOperator}
+        isResult={isResult}
+        setIsResult={setIsResult}
       />
     </div>
   )
 }
 
 ReactDOM.render(<Calculator />, document.getElementById("root"))
+
+//creare componente unico per le operazioni - evitare le duplicazioni dei componenti che svolgono operazioni
