@@ -99,11 +99,11 @@ function CalculatorBoard({
       if (operator == null) {
         setCurrentValue(parseInt(target))
       } else {
-        setNextValue(parseInt(target))
+        setNextValue(parseInt(nextValue + target))
       }
+      setIsResult(false)
       return
     }
-    setIsResult(false)
     if (operator == null) {
       setCurrentValue(parseInt(currentValue + target))
     } else {
@@ -189,4 +189,7 @@ function Calculator() {
 
 ReactDOM.render(<Calculator />, document.getElementById("root"))
 
-//creare componente unico per le operazioni - evitare le duplicazioni dei componenti che svolgono operazioni
+// creare componente unico per le operazioni - evitare le duplicazioni dei componenti che svolgono operazioni
+// semplificare il codice nei punti in cui non è scritto in modo comprensibile
+// gestire casi particolari delle operazioni
+// aggiungere tasto canc
