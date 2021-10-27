@@ -70,11 +70,9 @@ function CalculatorBoard({
   const onOperatorClick = (op) => {
     if (operator != null) {
       setCurrentValue(calculate(currentValue, nextValue, operator))
-      setNextValue(0)
-      setOperator(op)
-    } else {
-      setOperator(op)
+      setNextValue("")
     }
+    setOperator(op)
   }
   const onNumberClick = (target) => {
     if (isResult) {
