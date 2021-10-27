@@ -90,6 +90,12 @@ function CalculatorBoard({
       setNextValue(parseInt(nextValue + target))
     }
   }
+  const resetCalculator = () => {
+    setCurrentValue(0)
+    setNextValue("")
+    setOperator(null)
+    setIsResult(false)
+  }
   return (
     <div id="board">
       <div id="numbers">
@@ -109,14 +115,14 @@ function CalculatorBoard({
           <Number value="3" onClick={onNumberClick} />
         </div>
         <div className="board-row">
+          <button onClick={resetCalculator}>Canc</button>
           <Number value="0" onClick={onNumberClick} />
         </div>
       </div>
       <div className="operations">
-        <Operator onClick={onOperatorClick} symbol={"+"} />
-        <Operator onClick={onOperatorClick} symbol={"-"} />
-        <Operator onClick={onOperatorClick} symbol={"*"} />
-        <Operator onClick={onOperatorClick} symbol={"/"} />
+        {["+", "-", "*", "/"].map((symbol) => (
+          <Operator key={symbol} onClick={onOperatorClick} symbol={symbol} />
+        ))}
       </div>
     </div>
   )
@@ -168,7 +174,7 @@ function Calculator() {
 
 ReactDOM.render(<Calculator />, document.getElementById("root"))
 
-// creare componente unico per le operazioni - evitare le duplicazioni dei componenti che svolgono operazioni
+// DONE - creare componente unico per le operazioni - evitare le duplicazioni dei componenti che svolgono operazioni
 // separare i componenti in moduli
 // semplificare il codice nei punti in cui non è scritto in modo comprensibile
 // gestire casi particolari delle operazioni
