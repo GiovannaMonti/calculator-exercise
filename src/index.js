@@ -173,10 +173,3 @@ function Calculator() {
 }
 
 ReactDOM.render(<Calculator />, document.getElementById("root"))
-
-// DONE - creare componente unico per le operazioni - evitare le duplicazioni dei componenti che svolgono operazioni
-// separare i componenti in moduli
-// semplificare il codice nei punti in cui non è scritto in modo comprensibile
-// gestire casi particolari delle operazioni
-// aggiungere tasto canc
-// aggiungere css
