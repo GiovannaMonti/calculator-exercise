@@ -36,7 +36,6 @@ function TextInput({
   currentValue,
   nextValue,
   operator,
-  result,
   onInputSubmit,
   onChange,
 }) {
@@ -143,8 +142,8 @@ function CalculatorBoard({
 }
 
 function Calculator() {
-  const [currentValue, setCurrentValue] = useState(0)
-  const [nextValue, setNextValue] = useState(0)
+  const [currentValue, setCurrentValue] = useState("")
+  const [nextValue, setNextValue] = useState("")
   const [operator, setOperator] = useState(null)
   const [isResult, setIsResult] = useState(false)
   const result = calculate(currentValue, nextValue, operator)
@@ -158,10 +157,9 @@ function Calculator() {
         setNextValue={setNextValue}
         operator={operator}
         setOperator={setOperator}
-        result={result}
         onInputSubmit={() => {
           setCurrentValue(result)
-          setNextValue(0)
+          setNextValue("")
           setOperator(null)
           setIsResult(true)
         }}
