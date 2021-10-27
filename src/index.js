@@ -38,12 +38,7 @@ function TextInput({
         id="textinput"
         type="text"
         value={operator == null ? currentValue : nextValue}
-        onChange={(e) => {
-          const value = parseInt(e.target.value)
-          return onChange(
-            operator == null ? (currentValue = value) : (nextValue = value)
-          )
-        }}
+        onChange={(e) => onChange(parseInt(e.target.value))}
       ></input>
       <input type="submit" value="=" />
     </form>
