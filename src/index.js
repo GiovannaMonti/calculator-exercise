@@ -16,20 +16,8 @@ const calculate = (a, b, op) => {
   }
 }
 
-function Plus({ onClick }) {
-  return <button onClick={() => onClick("+")}>+</button>
-}
-
-function Minus({ onClick }) {
-  return <button onClick={() => onClick("-")}>-</button>
-}
-
-function Multiplier({ onClick }) {
-  return <button onClick={() => onClick("*")}>*</button>
-}
-
-function Divider({ onClick }) {
-  return <button onClick={() => onClick("/")}>/</button>
+function Operator({ onClick, symbol }) {
+  return <button onClick={() => onClick(symbol)}>{symbol}</button>
 }
 
 function TextInput({
@@ -132,10 +120,10 @@ function CalculatorBoard({
         </div>
       </div>
       <div className="operations">
-        <Plus onClick={onOperatorClick} />
-        <Minus onClick={onOperatorClick} />
-        <Multiplier onClick={onOperatorClick} />
-        <Divider onClick={onOperatorClick} />
+        <Operator onClick={onOperatorClick} symbol={"+"} />
+        <Operator onClick={onOperatorClick} symbol={"-"} />
+        <Operator onClick={onOperatorClick} symbol={"*"} />
+        <Operator onClick={onOperatorClick} symbol={"/"} />
       </div>
     </div>
   )
@@ -188,6 +176,8 @@ function Calculator() {
 ReactDOM.render(<Calculator />, document.getElementById("root"))
 
 // creare componente unico per le operazioni - evitare le duplicazioni dei componenti che svolgono operazioni
+// separare i componenti in moduli
 // semplificare il codice nei punti in cui non è scritto in modo comprensibile
 // gestire casi particolari delle operazioni
 // aggiungere tasto canc
+// aggiungere css
