@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 body{
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Roboto', 'Courier New', Courier, monospace;
 }
 #root{
     min-height: 95vh;
@@ -15,14 +16,22 @@ body{
     display: flex;
 } */
 #calculator{
-  width: 300px;  
+    padding: 2rem 1rem;
+    background-color: #f1f1f1;
+    border-radius: 15px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+}
+button, input{
+    font-family: 'Roboto', 'Courier New', Courier, monospace;
 }
 form{
     width: 100%
 }
 #current-operation{
+    font-size: .8rem;
     min-height: 53px;
     background-color: lightgrey;
+    color: #777777;
     display: flex;
     align-items: center;
     justify-content: flex-end;
