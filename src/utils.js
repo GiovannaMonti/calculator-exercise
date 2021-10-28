@@ -5,9 +5,9 @@ const calculate = (a, b, op) => {
     case "-":
       return a - b
     case "/":
-      return a / b
+      return b === 0 ? "Err" : a / b
     case "*":
-      return a * b
+      return a === 0 && b === 0 ? "Err" : a * b
     default:
     // do nothing
   }
