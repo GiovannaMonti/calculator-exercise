@@ -13,6 +13,9 @@ function CalculatorBoard({
   setHasSubmitted,
 }) {
   const onOperatorClick = (op) => {
+    if (currentValue === "Err") {
+      return
+    }
     if (operator != null) {
       setCurrentValue(calculate(currentValue, nextValue, operator))
       setNextValue(0)
@@ -66,7 +69,12 @@ function CalculatorBoard({
       </div>
       <div className="operations">
         {["+", "-", "*", "/"].map((symbol) => (
-          <Operator key={symbol} onClick={onOperatorClick} symbol={symbol} />
+          <Operator
+            currentValue={currentValue}
+            key={symbol}
+            onClick={onOperatorClick}
+            symbol={symbol}
+          />
         ))}
       </div>
     </div>
