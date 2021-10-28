@@ -10,6 +10,7 @@ function CalculatorBoard({
   setOperator,
   isResult,
   setIsResult,
+  setHasSubmitted,
 }) {
   const onOperatorClick = (op) => {
     if (operator != null) {
@@ -17,9 +18,11 @@ function CalculatorBoard({
       setNextValue(0)
     }
     setOperator(op)
+    setHasSubmitted(false)
   }
   const onNumberClick = (target) => {
     if (isResult) {
+      setHasSubmitted(false)
       if (operator == null) {
         setCurrentValue(parseInt(target))
       } else {
@@ -28,6 +31,7 @@ function CalculatorBoard({
       setIsResult(false)
       return
     }
+    setHasSubmitted(false)
     if (operator == null) {
       setCurrentValue(parseInt(currentValue + target))
     } else {
