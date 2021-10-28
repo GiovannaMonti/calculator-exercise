@@ -50,18 +50,9 @@ function CalculatorBoard({
   return (
     <div id="board">
       <div id="numbers">
-        <Number value="7" onClick={onNumberClick} />
-        <Number value="8" onClick={onNumberClick} />
-        <Number value="9" onClick={onNumberClick} />
-
-        <Number value="4" onClick={onNumberClick} />
-        <Number value="5" onClick={onNumberClick} />
-        <Number value="6" onClick={onNumberClick} />
-
-        <Number value="1" onClick={onNumberClick} />
-        <Number value="2" onClick={onNumberClick} />
-        <Number value="3" onClick={onNumberClick} />
-
+        {["7", "8", "9", "4", "5", "6", "1", "2", "3"].map((value) => (
+          <Number key={value} value={value} onClick={onNumberClick} />
+        ))}
         <button id="canc" onClick={resetCalculator}>
           C
         </button>
