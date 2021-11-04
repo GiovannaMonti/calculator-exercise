@@ -24,7 +24,9 @@ function Calculator() {
         setOperator={setOperator}
         onInputSubmit={() => {
           if (!hasSubmitted) {
-            setCurrentValue(result)
+            if (nextValue !== 0) {
+              setCurrentValue(result)
+            }
             setNextValue(0)
             setOperator(null)
             setIsResult(true)
